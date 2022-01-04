@@ -9,6 +9,8 @@ EXTRA_PROGRAMS = \
 
 libllrfs_a_SOURCES = \
 	libllrfs.h \
+	llr_util.c \
+	llr_util.h \
 	raid/llr_cauchy.h \
 	raid/llr_cauchy_seq.c \
 	raid/llr_cauchy_seq.h \
