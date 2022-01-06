@@ -18,6 +18,8 @@ libllrfs_a_SOURCES = \
 	raid/llr_encode.h \
 	raid/llr_gf.c \
 	raid/llr_gf.h \
+	raid/llr_matrix_inverse.c \
+	raid/llr_matrix_inverse.h \
 	raid/llr_xorgf.c \
 	raid/llr_xorgf.h
 
@@ -57,7 +59,8 @@ ACLOCAL_AMFLAGS = -I m4
 
 TESTS = \
 	unit_tests/raid/test_cauchy_seq \
-	unit_tests/raid/test_gf
+	unit_tests/raid/test_gf \
+	unit_tests/raid/test_matrix_inverse
 check_PROGRAMS = $(TESTS)
 
 if USE_VALGRIND
