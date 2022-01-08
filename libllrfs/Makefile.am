@@ -64,7 +64,8 @@ ACLOCAL_AMFLAGS = -I m4
 TESTS = \
 	unit_tests/raid/test_cauchy_seq \
 	unit_tests/raid/test_gf \
-	unit_tests/raid/test_matrix_inverse
+	unit_tests/raid/test_matrix_inverse \
+	unit_tests/raid/test_raid6
 check_PROGRAMS = $(TESTS)
 
 if USE_VALGRIND
