@@ -74,5 +74,9 @@ int main(void) {
 	test3x3(0x02, 0x8E, 0x04,
 		0xE2, 0xC8, 0x80,
 		0x66, 0x8B, 0xA0);
+	/* Glider!  */
+	test3x3(0, 1, 0,
+		0, 0, 1,
+		1, 1, 1);
 	return 0;
 }

@@ -53,6 +53,64 @@ void llr_matrix_inverse(unsigned int w,
 
 		/* Get the diagonal.  */
 		e = *mat_at(w, mat, j, j);
+
+		/* Is the diagonal 0?
+		 * Make it nonzero.  */
+		if (e == 0x00) {
+			/* Search for a row that has nonzero
+			 * that column.
+			 * Note the "w - j" --- we search from
+			 * the bottom of the matrix.
+			 * This is a bit of cheating, but we
+			 * use this procedure for matrices
+			 * where there is likely to be a row
+			 * of all 1s, and using that row for
+			 * this nonzero correction is problematic
+			 * due to the all 1s cancelling out
+			 * the other rows as well.
+			 * That all 1s is not going to be the
+			 * bottom of the matrix unless we are
+			 * in RAID5 mode, but in RAID5 mode
+			 * we do not bother with this matrix
+			 * inverse anyway.
+			 */
+			for (jj = 0; jj < w; ++jj) {
+				if (*mat_at(w, mat, j, w - jj - 1) != 0)
+					break;
+			}
+			/* Add that row to this row.  */
+			for (i = 0; i < w * 2; ++i) {
+				*mat_at(w, mat, i, j) = llr_gf_add(
+					*mat_at(w, mat, i, j),
+					*mat_at(w, mat, i, w - jj - 1)
+				);
+			}
+			/* The columns to the left of the diagonal
+			 * are now possibly non-zero.
+			 * Cancel them out.
+			 */
+			for (jj = 0; jj < j; ++jj) {
+				e = *mat_at(w, mat, jj, j);
+				if (e == 0)
+					continue;
+				/* Subtract the corresponding previous
+				 * row times e, which was already an
+				 * identity matrix.  */
+				for (i = 0; i < w * 2; ++i) {
+					*mat_at(w, mat, i, j) = llr_gf_sub(
+						*mat_at(w, mat, i, j),
+						llr_gf_mul(
+							e,
+							*mat_at(w, mat, i, jj)
+						)
+					);
+				}
+			}
+
+			/* Re-sample the diagonal.  */
+			e = *mat_at(w, mat, j, j);
+		}
+
 		/* If not 1, divide the entire row.  */
 		if (e != 0x01) {
 			one_over_e = llr_gf_reciprocal(e);
