@@ -14,6 +14,8 @@ libllrfs_a_SOURCES = \
 	raid/llr_cauchy.h \
 	raid/llr_cauchy_seq.c \
 	raid/llr_cauchy_seq.h \
+	raid/llr_decoder.c \
+	raid/llr_decoder.h \
 	raid/llr_encode.c \
 	raid/llr_encode.h \
 	raid/llr_gf.c \
