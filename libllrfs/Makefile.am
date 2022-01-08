@@ -23,7 +23,9 @@ libllrfs_a_SOURCES = \
 	raid/llr_matrix_inverse.c \
 	raid/llr_matrix_inverse.h \
 	raid/llr_xorgf.c \
-	raid/llr_xorgf.h
+	raid/llr_xorgf.h \
+	userspace/llr_testvectors.c \
+	userspace/llr_testvectors.h
 
 llr_xorgf_generator_SOURCES = \
 	raid/llr_xorgf_generator.c
