@@ -65,6 +65,18 @@ other devices in the array.
 However, the array has a unified superblock, containing
 the "root sectors" of all devices.
 
+(Indeed, prehistoric iterations of the LLRFS design had the
+striping layer below the log-structuring layer, i.e. there
+was a single log that was striped across devices.
+This would have been much better performance wise.
+However, that design is not usable with multiple zoned devices
+with different zoning patterns; for that usage, you want
+each device to have its own log structure.
+As flexibility is a design goal that is higher than performance,
+LLRFS was redesigned so that the log-structuring is per device,
+providing transactional semantics across devices, then layering
+the striping on top of the transactional array.)
+
 For now, we focus on the structure within one device.
 
 The Wandering Tree Problem
@@ -96,9 +108,9 @@ For storage devices like SSDs with a maximum number of write
 events, it also wears down the device faster.
 
 On F2FS, the wandering tree problem is solved by not actually
-using a metadata tree; instead, many metadata blocks are
-have two areas, written alternately with each other,
-effectively creating a "mini log" for each metadata block.
+using a metadata tree; instead, many metadata blocks have two
+areas, written alternately with each other, effectively creating
+a "mini log" for each metadata block.
 
 ### The Wandering Tree And LFS Garbage Collector
 

@@ -38,19 +38,10 @@ insight allows building the encoding matrix faster.
     index to the other sequence `y[j]`, and each element is just
     `1 / (x[i] - y[j])`.
 
-Grass uses an *Extended* Cauchy matrix for the parity blocks.
-An Extended Chaucy matrix is like a Chaucy matrix but with the
-top most row being all 1s.
-This makes the first parity block be a simple XOR of all data
-blocks, which helps speed up recovery when only one data device
-is down.
-This also gives us a parity block "for free", allowing a total
-of 1 + 256 data plus parity blocks, though given that the Turf
-level encryption allows only for 255 devices, the extra is not
-actually utilizable.
-There are 256 `GF(2^8)` elements and each element can only
-occur once in both the `x[i]` data-indexed sequence and the
-`y[j]` parity-indexed sequence.
+Grass uses a *Generalized* Cauchy matrix for the parity blocks.
+A Generalized Cauchy matrix requires two more sequences, `c[i]`
+and `d[j]`, and each element of the matrix is
+(c[i] * d[j]) / (x[i] / y[j])`.
 
 Generating the Chaucy Matrix
 ----------------------------
